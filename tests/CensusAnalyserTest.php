@@ -17,6 +17,11 @@
             $this->assertEquals($largestStateInArea->sortDataByAreaInSquareKm(),'Rajasthan');
         }
 
+        public function testGivenACsvFile_WhenCheckedForDensityInPopulation_ShouldReturnMostDenslyPopulated(){
+            $mostDenslyPopulated = new \App\Service\CensusAnalyser;
+            $this->assertEquals($mostDenslyPopulated->sortDataByDenslyPopulated(),'Maharashtra');
+        }
+
         
         
     }
