@@ -16,6 +16,15 @@ class CensusAnalyser
         return $totalRows;
     }
 
+    function sortStateNamesByAlphabeticalOrder()
+    {
+        $totalRows[] = $this->readCSV();
+        usort($totalRows[0], function ($pos1, $pos2) {
+            return $pos1[0] <=> $pos2[0];
+        });
+        return $totalRows[0][0][0];
+    }
+
     function sortDataByPopulation()
     {
         $totalRows[] = $this->readCSV();
