@@ -12,6 +12,13 @@
             $this->assertEquals($mostPopulatedState->sortDataByPopulation(),'Uttar Pradesh');
         }
 
+        public function testGivenACsvFile_WhenCheckedForLargestStateInArea_ShouldReturnTheLargestState(){
+            $largestStateInArea = new \App\Service\CensusAnalyser;
+            $this->assertEquals($largestStateInArea->sortDataByAreaInSquareKm(),'Rajasthan');
+        }
+
+        
+        
     }
 
 ?>
