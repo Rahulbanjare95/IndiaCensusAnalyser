@@ -22,7 +22,7 @@ class CensusAnalyser
         usort($totalRows[0], function ($pos1, $pos2) {
             return $pos1[0] <=> $pos2[0];
         });
-        return $totalRows[0][0][0];
+        return $totalRows;
     }
 
     function sortDataByPopulation()
@@ -31,7 +31,7 @@ class CensusAnalyser
         usort($totalRows[0], function ($pos1, $pos2) {
             return $pos2[1] <=> $pos1[1];
         });
-        return $totalRows[0][0][0];
+        return $totalRows;
     }
 
     function sortDataByAreaInSquareKm()
@@ -40,7 +40,7 @@ class CensusAnalyser
         usort($totalRows[0], function ($pos1, $pos2) {
             return $pos2[2] <=> $pos1[2];
         });
-        return $totalRows[0][0][0];
+        return $totalRows;
     }
 
     function sortDataByDenslyPopulated()
@@ -49,6 +49,6 @@ class CensusAnalyser
         usort($totalRows[0], function ($pos1, $pos2) {
             return $pos2[3] <=> $pos1[3];
         });
-        return $totalRows[0][0][0];
+        return $totalRows;
     }
 }
