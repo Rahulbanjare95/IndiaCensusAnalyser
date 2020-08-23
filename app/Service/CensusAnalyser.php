@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Service;
+use app\Exception\CensusAnalyserException;
 
 class CensusAnalyser
 {
@@ -16,11 +17,29 @@ class CensusAnalyser
         return $totalRows;
     }
 
+    function readIncorrectCSV($file){
+        try{
+            if(($h = \fopen($file,"r")) == FALSE){
+                throw new Exception();  
+            }
+            else {
+                fgetcsv($h);
+            while (($data = \fgetcsv($h, 10000, ",")) != FALSE) {
+                $totalRows[] = $data;
+            }
+            return $totalRows;
+            }
+        }
+        catch ( Exception $e){
+            $e->errorMessage();
+        }
+    }
+
     function sortStateNamesByAlphabeticalOrder()
     {
         $totalRows[] = $this->readCSV();
-        usort($totalRows[0], function ($pos1, $pos2) {
-            return $pos1[0] <=> $pos2[0];
+        usort($totalRows[0], function ($state1, $state2) {
+            return $state1[0] <=> $state2[0];
         });
         return $totalRows;
     }
@@ -28,8 +47,8 @@ class CensusAnalyser
     function sortDataByPopulation()
     {
         $totalRows[] = $this->readCSV();
-        usort($totalRows[0], function ($pos1, $pos2) {
-            return $pos2[1] <=> $pos1[1];
+        usort($totalRows[0], function ($state1, $state2) {
+            return $state2[1] <=> $state1[1];
         });
         return $totalRows;
     }
@@ -37,8 +56,8 @@ class CensusAnalyser
     function sortDataByAreaInSquareKm()
     {
         $totalRows[] = $this->readCSV();
-        usort($totalRows[0], function ($pos1, $pos2) {
-            return $pos2[2] <=> $pos1[2];
+        usort($totalRows[0], function ($state1, $state2) {
+            return $state2[2] <=> $state1[2];
         });
         return $totalRows;
     }
@@ -46,8 +65,8 @@ class CensusAnalyser
     function sortDataByDenslyPopulated()
     {
         $totalRows[] = $this->readCSV();
-        usort($totalRows[0], function ($pos1, $pos2) {
-            return $pos2[3] <=> $pos1[3];
+        usort($totalRows[0], function ($state1, $state2) {
+            return $state2[3] <=> $state1[3];
         });
         return $totalRows;
     }

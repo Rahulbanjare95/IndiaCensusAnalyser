@@ -1,7 +1,8 @@
 <?php
-
+use app\Exception\CensusAnalyserException;
 class CensusAnalyserTest extends \PHPUnit\Framework\TestCase
 {
+    
 
     public function testGivenACsvFile_WhenCountsTheRows_ShouldReturnNumberofRows()
     {
@@ -9,8 +10,21 @@ class CensusAnalyserTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(count($numberOfRecords->readCSV()), 29);
     }
 
+    public function testGivenIncorrectFile_WhenNotFound_ShouldThrowException()
+    {   
+        $numberOfRecords = new \App\Service\CensusAnalyser;
+        try {
+         $fileLocation = "Indian.csv";
+        $numberOfRecords->readIncorrectCSV($fileLocation);
+        }
+        catch(Exception $e){
+           $this->assertEquals("fopen(Indian.csv): failed to open stream: No such file or directory", $e->getMessage());
+        }
+    }
+
     public function testGivenACsvFile_WhenSortedByAlphabeticaOrder_ShouldReturnStateWithAlphabeticallyFirst()
     {
+      
         $alphabeticalOrder = new \App\Service\CensusAnalyser;
         $array = $alphabeticalOrder->sortStateNamesByAlphabeticalOrder();
         $this->assertEquals($array[0][0][0], 'Andhra Pradesh');
