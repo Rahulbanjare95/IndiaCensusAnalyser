@@ -5,19 +5,8 @@ use app\Exception\CensusAnalyserException;
 
 class CensusAnalyser
 {
-
-    function readCSV()
+    function readCSV($file)
     {
-        if (($h = \fopen("IndiaStateCensusData.csv", "r")) != FALSE) {
-            fgetcsv($h);
-            while (($data = \fgetcsv($h, 10000, ",")) != FALSE) {
-                $totalRows[] = $data;
-            }
-        }
-        return $totalRows;
-    }
-
-    function readIncorrectCSV($file){
         try{
             if(($h = \fopen($file,"r")) == FALSE){
                 throw new Exception();  
@@ -30,41 +19,41 @@ class CensusAnalyser
             return $totalRows;
             }
         }
-        catch ( Exception $e){
-            $e->errorMessage();
+        catch(Exception $e){
+            $e->getMessage();
         }
     }
 
-    function sortStateNamesByAlphabeticalOrder()
+    function sortStateNamesByAlphabeticalOrder($file)
     {
-        $totalRows[] = $this->readCSV();
+        $totalRows[] = $this->readCSV($file);
         usort($totalRows[0], function ($state1, $state2) {
             return $state1[0] <=> $state2[0];
         });
         return $totalRows;
     }
 
-    function sortDataByPopulation()
+    function sortDataByPopulation($file)
     {
-        $totalRows[] = $this->readCSV();
+        $totalRows[] = $this->readCSV($file);
         usort($totalRows[0], function ($state1, $state2) {
             return $state2[1] <=> $state1[1];
         });
         return $totalRows;
     }
 
-    function sortDataByAreaInSquareKm()
+    function sortDataByAreaInSquareKm($file)
     {
-        $totalRows[] = $this->readCSV();
+        $totalRows[] = $this->readCSV($file);
         usort($totalRows[0], function ($state1, $state2) {
             return $state2[2] <=> $state1[2];
         });
         return $totalRows;
     }
 
-    function sortDataByDenslyPopulated()
+    function sortDataByDenslyPopulated($file)
     {
-        $totalRows[] = $this->readCSV();
+        $totalRows[] = $this->readCSV($file);
         usort($totalRows[0], function ($state1, $state2) {
             return $state2[3] <=> $state1[3];
         });
